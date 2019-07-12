@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - UpdateTaskDemo",
+            "request": "launch",
+            "mainClass": "UpdateTaskDemo",
+            "projectName": "TritonVisualizer"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "client.App",
+            "projectName": "TritonVisualizer"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - App",
             "request": "launch",
             "mainClass": "client.App",

@@ -1,0 +1,5 @@
+Robot_movement_over_time
+Time,0,1,2
+Velocity,1,5,-3
+Accel,123,3,0
+Position,43,2,1
