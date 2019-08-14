@@ -5,121 +5,68 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.application.Application;
-
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-public class Gui extends Application {
+public class VizBox {
 
-    CsvProvider provider;
-    Map<String, Boolean> persistentVisibleTracker = new HashMap<>();
-    
     Text messageBox;
     LineChart<Number, Number> chart;
     GridPane checkBoxes;
     NumberAxis xAxis;
     NumberAxis yAxis;
 
-    public boolean hasBeenInitialized = false;
-    
-    public void launchVisualizer(String[] args) {
-        launch(args);
-    }
+    Map<String, Boolean> persistentVisibleTracker;
 
-    // private static void copyFileUsingJava7Files(File source, File dest) throws IOException {
-    //     Files.copy(source.toPath(), dest.toPath());
-    // }
 
-	@Override     
-	public void start(Stage stage) throws Exception {
-
-		// SETUP GUI STAGE
-
-		stage.setTitle("Visualizer");
-		// Message box
-		messageBox = new Text("Press the button to get the values");
-		// Button
-		Button button = new Button("Check for data");
-		// Axis
+    public VizBox() {
+        // Message box
+		messageBox = new Text("I'm a text box");
+        // Axis
 		xAxis = new NumberAxis();
 		yAxis = new NumberAxis();
 		// Chart
 		chart = new LineChart<Number,Number>(xAxis, yAxis);
-		chart.setCreateSymbols(false);
-		// Checkbox grid pane
-		checkBoxes = new GridPane();
-		// Border pane
-		BorderPane border = new BorderPane();
-		border.setLeft(button);
-		// border.setBottom(button);-+
-		border.setRight(checkBoxes);
-		// border.setRight(checkBoxes);
-		// Root pane
-		StackPane root = new StackPane();
-		root.getChildren().addAll(chart, border, messageBox);
+        chart.setCreateSymbols(false);
+        // Checkbox grid pane
+        checkBoxes = new GridPane();
+        checkBoxes.addRow(0, new CheckBox("I'm a checkbox"));
+        checkBoxes.addRow(1, new CheckBox("I'm another one"));
 
-		stage.setScene(new Scene(root, 1200, 700));
-
-
-
-
-        // WHEN BUTTON PRESSED
-
-		button.setOnAction(new EventHandler<ActionEvent>() {
-		@Override
-		public void handle(ActionEvent event) {
-
-            // //exit if no new data exists, according to the callback
-            // if(!provider.newDataExists()) {
-            //     messageBox.setText("No new data available");
-            //     return;
-            // }
-        }});
-
-		// SHOW STAGE
-        stage.show();
-
-        hasBeenInitialized = true;
-        System.out.println("Initialized");
+        
+        persistentVisibleTracker = new HashMap<>();
     }
-    
-    public void push(String csvFile) {
+
+    public LineChart<Number,Number> getChart() {
+        return chart;
+    }
+    public Text getMessageBox() {
+        return messageBox;
+    }
+    public GridPane getCheckBoxes() {
+        return checkBoxes;
+    }
+
+    public void updateFromFile(File csvFile) {
         BufferedReader br = null;
         String line = "";
-
-        System.out.println("FX thread gui initialized "+ hasBeenInitialized);
 
         try {
             br = new BufferedReader(new FileReader(csvFile));
 
             String title = br.readLine();
-            System.out.println("Title is "+ title);
             chart.setTitle(title);
 
             // //save csv file in history log directory
@@ -195,8 +142,7 @@ public class Gui extends Application {
                 }
             }
         }
-
-
     }
-}
+    	
 
+}

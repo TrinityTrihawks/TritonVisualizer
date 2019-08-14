@@ -1,5 +1,7 @@
-Robot_movement_over_time
+Robot Movement Over Time
 Time,0,1,2
 Velocity,1,5,-3
-Accel,123,3,0
-Position,43,2,1
+Accel,123,3,500
+Position, 50,100,75
+What-Not, 300,300,300
+Hey there, 100, 100, 100
